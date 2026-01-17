@@ -1,0 +1,349 @@
+/* Vibe Oracle - Mystical Styling */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Mono&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Crimson Text', Georgia, serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    min-height: 100vh;
+    color: #e8e6f0;
+    overflow-x: hidden;
+}
+
+/* Starfield background */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 230px 80px, #eee, transparent),
+        radial-gradient(2px 2px at 300px 150px, #fff, transparent),
+        radial-gradient(1px 1px at 350px 50px, rgba(255,255,255,0.7), transparent);
+    background-size: 400px 200px;
+    animation: twinkle 8s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Screens */
+.screen {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.5s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Intro */
+#intro {
+    text-align: center;
+}
+
+.oracle-eye {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.oracle-eye.spinning {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #f5af19, #f12711);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-style: italic;
+    color: #a8a4c4;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.btn-mystical {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-family: inherit;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-mystical:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+}
+
+.disclaimer {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #6b6890;
+    font-style: italic;
+}
+
+/* Questions */
+.question-container {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.question-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: #a8a4c4;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#question-text {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.option-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e8e6f0;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.option-btn:hover {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateX(5px);
+}
+
+.progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 2rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Divining */
+#divining {
+    text-align: center;
+}
+
+#divining h2 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+}
+
+.divining-text {
+    color: #a8a4c4;
+    font-style: italic;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Results */
+.results-container {
+    text-align: center;
+}
+
+.vibe-meter {
+    margin-bottom: 2rem;
+}
+
+.vibe-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #a8a4c4;
+    margin-bottom: 0.5rem;
+}
+
+.vibe-percent {
+    font-size: 4rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #f5af19, #f12711);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.vibe-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.vibe-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f5af19);
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+.spirit-animal-card,
+.reading-card,
+.advice-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #667eea;
+    margin-bottom: 0.75rem;
+}
+
+.spirit-animal-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #f5af19;
+}
+
+.spirit-animal-card p,
+.reading-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #c8c5e0;
+}
+
+.attributes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.attribute {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.attr-label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #6b6890;
+    margin-bottom: 0.375rem;
+}
+
+.attr-value {
+    font-size: 1rem;
+    color: #a8a4c4;
+}
+
+.advice-card ul {
+    list-style: none;
+    text-align: left;
+}
+
+.advice-card li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.advice-card li:last-child {
+    border-bottom: none;
+}
+
+.advice-card li::before {
+    content: "✧ ";
+    color: #667eea;
+}
+
+.share-text {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #6b6890;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    h1 { font-size: 2.25rem; }
+    .vibe-percent { font-size: 3rem; }
+    .attributes { grid-template-columns: 1fr; }
+}

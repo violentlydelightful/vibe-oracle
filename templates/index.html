@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Oracle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <!-- Intro Screen -->
+        <div id="intro" class="screen active">
+            <div class="oracle-eye">👁</div>
+            <h1>The Vibe Oracle</h1>
+            <p class="subtitle">answers questions you didn't know you were asking</p>
+            <button class="btn-mystical" onclick="startDivination()">Consult the Oracle</button>
+            <p class="disclaimer">Side effects may include: existential clarity, mild confusion, the urge to text your ex (don't)</p>
+        </div>
+
+        <!-- Questions -->
+        <div id="questions" class="screen">
+            <div class="question-container">
+                <div class="question-number">Question <span id="q-num">1</span> of 5</div>
+                <h2 id="question-text"></h2>
+                <div id="options" class="options"></div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+        </div>
+
+        <!-- Divining -->
+        <div id="divining" class="screen">
+            <div class="oracle-eye spinning">👁</div>
+            <h2>The Oracle is consulting the void...</h2>
+            <p class="divining-text" id="divining-status">Interpreting cosmic frequencies</p>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="screen">
+            <div class="results-container">
+                <div class="vibe-meter">
+                    <div class="vibe-label">Current Vibe Level</div>
+                    <div class="vibe-percent" id="vibe-percent">87%</div>
+                    <div class="vibe-bar">
+                        <div class="vibe-fill" id="vibe-fill"></div>
+                    </div>
+                </div>
+
+                <div class="spirit-animal-card">
+                    <div class="card-label">Your Spirit Animal</div>
+                    <h2 id="spirit-name">The Philosophical Crow</h2>
+                    <p id="spirit-meaning">You collect shiny thoughts...</p>
+                </div>
+
+                <div class="reading-card">
+                    <div class="card-label">Your Reading</div>
+                    <p id="reading-text" class="reading-text"></p>
+                </div>
+
+                <div class="attributes">
+                    <div class="attribute">
+                        <span class="attr-label">Texture</span>
+                        <span class="attr-value" id="attr-texture">velvet</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attr-label">Color</span>
+                        <span class="attr-value" id="attr-color">void black</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attr-label">Time</span>
+                        <span class="attr-value" id="attr-time">3:47 AM</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attr-label">Element</span>
+                        <span class="attr-value" id="attr-element">shadow</span>
+                    </div>
+                </div>
+
+                <div class="advice-card">
+                    <div class="card-label">Cosmic Advice</div>
+                    <ul id="advice-list"></ul>
+                </div>
+
+                <button class="btn-mystical" onclick="restart()">Consult Again</button>
+                <p class="share-text">The Oracle has spoken. Screenshot and share your vibe.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "Pick a texture that matches your current mental state:",
+                options: ["Wet sand", "TV static", "Warm bread", "Broken glass", "Cloud", "Velcro"]
+            },
+            {
+                text: "What color is your anxiety today?",
+                options: ["Fluorescent office lighting", "3 AM blue", "Beige dread", "Aggressive orange", "No color, just vibration", "Glitter (chaotic)"]
+            },
+            {
+                text: "What time does your soul think it is?",
+                options: ["Perpetual Monday morning", "Friday 5:01 PM", "The hour before sunrise", "Eternal lunch break", "Time isn't real", "The moment before a sneeze"]
+            },
+            {
+                text: "If your current vibe was a sound, it would be:",
+                options: ["Elevator music in purgatory", "Distant lawn mower", "Dramatic orchestral swell", "Notification you can't find", "Peaceful rain", "Someone typing aggressively"]
+            },
+            {
+                text: "Choose your burden:",
+                options: ["Caring too much", "Caring too little", "Caring about the wrong things", "Not knowing what to care about", "Pretending not to care", "Caring perfectly (insufferable)"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function startDivination() {
+            currentQuestion = 0;
+            answers = {};
+            showQuestion();
+            showScreen('questions');
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('q-num').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = q.text;
+            document.getElementById('progress').style.width = ((currentQuestion) / questions.length * 100) + '%';
+
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => selectAnswer(i, opt);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(index, value) {
+            answers[currentQuestion] = value;
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                divine();
+            }
+        }
+
+        async function divine() {
+            showScreen('divining');
+
+            const statuses = [
+                "Reading the cosmic static...",
+                "Consulting ancient memes...",
+                "Decoding your energy signature...",
+                "Asking the void (it's being cryptic)...",
+                "Channeling chaotic wisdom..."
+            ];
+
+            let i = 0;
+            const statusInterval = setInterval(() => {
+                document.getElementById('divining-status').textContent = statuses[i % statuses.length];
+                i++;
+            }, 800);
+
+            try {
+                const response = await fetch('/divine', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answers })
+                });
+
+                const data = await response.json();
+
+                setTimeout(() => {
+                    clearInterval(statusInterval);
+                    showResults(data);
+                }, 3000);
+            } catch (error) {
+                clearInterval(statusInterval);
+                alert('The Oracle is temporarily unavailable. The void is buffering.');
+            }
+        }
+
+        function showResults(data) {
+            document.getElementById('vibe-percent').textContent = data.vibe_percent + '%';
+            document.getElementById('vibe-fill').style.width = data.vibe_percent + '%';
+
+            document.getElementById('spirit-name').textContent = data.spirit_animal.name;
+            document.getElementById('spirit-meaning').textContent = data.spirit_animal.meaning;
+
+            document.getElementById('reading-text').textContent = data.reading;
+
+            document.getElementById('attr-texture').textContent = data.texture;
+            document.getElementById('attr-color').textContent = data.color;
+            document.getElementById('attr-time').textContent = data.time;
+            document.getElementById('attr-element').textContent = data.element;
+
+            const adviceList = document.getElementById('advice-list');
+            adviceList.innerHTML = '';
+            data.advice.forEach(a => {
+                const li = document.createElement('li');
+                li.textContent = a;
+                adviceList.appendChild(li);
+            });
+
+            showScreen('results');
+        }
+
+        function restart() {
+            showScreen('intro');
+        }
+    </script>
+</body>
+</html>
